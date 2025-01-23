@@ -9,7 +9,7 @@ window.onload = function() {
             toast.style.opacity = 0;
             setTimeout(function() {
                 toast.style.display = 'none';
-                toast.style.opacity = 1; // Reset opacity for next use
+                toast.style.opacity = 1;
             }, 500); // Tempo de animação de fade-out
         }, 5000);
     }

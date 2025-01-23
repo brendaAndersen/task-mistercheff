@@ -1,6 +1,6 @@
 <?php
 try {
-    $dbPath = '/home/lux/.local/share/DBeaverData/workspace6/.metadata/sample-database-sqlite-1/Chinook.db'; // adicionar caminho do arquivo.db 
+    $dbPath = ''; // adicionar caminho do arquivo.db 
     $dsn = 'sqlite:' . $dbPath;
 
     $pdo = new PDO($dsn);
