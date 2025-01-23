@@ -1,6 +1,6 @@
 <?php
 try {
-    $dbPath = ''; // adicionar caminho do arquivo.db 
+    $dbPath = '/home/lux/.local/share/DBeaverData/workspace6/.metadata/sample-database-sqlite-1/Chinook.db'; // adicionar caminho do arquivo.db 
     $dsn = 'sqlite:' . $dbPath;
 
     $pdo = new PDO($dsn);
@@ -41,7 +41,7 @@ try {
         $stmt_check->execute();
         $store_count = $stmt_check->fetchColumn();
 
-        if ($store_count > 0) {
+        if ($store_count > 0 || $store_name === '' && $cnpj === '' && $email === '' && $contact === '' && $cep === '' && $street === '' && $number === '' && $complement === '' && $neighborhood === '' && $city === '' && $state === '') {
             $toastClass = 'toast-info';
             $toastMessage = 'Empresa já está cadastrada.';
         } else {
@@ -83,7 +83,7 @@ try {
     $toastMessage = 'Ocorreu um erro! Tente novamente.';
 }
 ?><!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="dark"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,10 +96,12 @@ try {
 
 </head>
 <body>
-    <div id="theme-toggle" class="theme-toggle-btn">
+    <div class="content">
         <h2>Cadastro de Empresa</h2>
-        <i id="theme-icon" class="fas fa-sun"></i>
-    </div>    
+        <div id="theme-toggle" class="theme-toggle-btn">
+            <i id="theme-icon" class="fas fa-sun"></i>
+        </div>    
+    </div>
         
     <div id="container">
     <form id="form" method="POST" enctype="multipart/form-data">
@@ -243,14 +245,11 @@ try {
             </div>
             
             <div class="input-container">
-                <input
-                    id="logo"
-                    type="file"
-                    name="logo"
-                    class="input"
-                    placeholder=""
-                />
+                <label for="logo" class="custom-file-label">Escolher arquivo</label>
+                <input id="logo" type="file" name="logo" class="input-file" />
             </div>
+
+
             
             <input id="show" type="submit" value="Cadastrar">
             
@@ -266,7 +265,7 @@ try {
     <?php endif; ?>
    
     <?php if (isset($company)): ?>
-    <script>
+        <script>
         Swal.fire({
             title: 'Dados da Empresa Cadastrada',
             html: `
@@ -294,28 +293,8 @@ try {
     </script>
     <?php endif; ?>
 
-    <script>
-        window.onload = function() {
-            var toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.display = 'block';
-                setTimeout(function() {
-                    toast.style.display = 'none';
-                }, 5000);
-            }
-        };
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            document.body.classList.toggle('light-mode');  
-
-            var icon = document.getElementById('theme-icon');
-            if (document.body.classList.contains('light-mode')) {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');  
-            } else {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');   
-            }
-        });
+    <script src="src/js/script.js">
+       
     </script>
 </body>
 </html>
