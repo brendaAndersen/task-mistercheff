@@ -1,8 +1,8 @@
 :root {
     /* Cores principais */
-    --base: #8B5CF6;
-    --violet-100: #9956f6;
-    
+    --base: #e66f00;
+    --second-base: #d47822;
+    --third-base: #ecc9a8;
     /* Cores de fundo */
     --black-400: #121214;
     --black-500: #1a1a1e;
@@ -11,38 +11,51 @@
 
     /* Cores de texto */
     --gray-100: #4B5563;
-    --white-100: #8B5CF6;
+    --gray-200: #F4F5F7;
+
+    --white-100: #d47822;
     --white-200: #ededed;
     --white-300: #fff;
 
+    --green-100: #399200;
     /* Tema claro e escuro */
     color-scheme: light dark;
 }
 
 html[data-theme="dark"] {
-    --base: #8B5CF6;
-    --violet-100: #9956f6;
+    --base: #e66f00;
+    --second-base: #d47822;
+    --third-base: #d47822;
+
     --black-400: #121214;
     --black-500: #1a1a1e;
     --black-600: #1E293B;
     --black-700: #fff;
+    
     --gray-100: #4B5563;
+    --gray-200: #F4F5F7;
+
     --white-100: #ffffff;  
     --white-200: #1a1a1e;
     --white-300: #1E293B;
 }
 
 html[data-theme="light"] {
-    --base: #8B5CF6;
-    --violet-100: #9956f6;
+    --base: #e66f00;
+    --second-base: #d47822;
+    --third-base: #ecc9a8;
+
     --black-100: #ededed;
     --black-400: #ededed;
-    --black-500: #cbced3;
+
+    --black-500: #F4F5F7;
     --black-600: #fff;
-    --black-700: #8B5CF6;
-    --gray-100: #8B5CF6;  
+    --black-700: #399200;
+
+    --gray-100: #e29e5e;  
+    --gray-200: #F4F5F7;
     
-    --white-100: #8B5CF6;  
+    --white-100: #e66f00;  
     --white-200: #dedede;  
     --white-300: #f5f5f5;  
 }
@@ -75,15 +88,16 @@ body {
     align-items: center;
     display: flex;
     background-color: var(--black-500);
-    width: 60rem;
+    width: 50rem;
     height: auto;
     max-width: 100%;
     border-radius: 20px;
     padding: 20px;
+    color: var(--white-100);
 }
 
 h2 {
-    color: var(--violet-100);
+    color: var(--second-base);
     margin: 0;
     flex-grow: 1;
     text-align: center;
@@ -91,6 +105,11 @@ h2 {
 
 h3 {
     color: var(--white-100);
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
 }
 
 #form {
@@ -115,17 +134,21 @@ h3 {
     color: var(--white-100);
     font-size: 0.875rem;
     border: none;
-    border-bottom: 2px solid var(--gray-100);
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1.4px solid var(--green-100);
     font-weight: 500;
     width: 100%;
     padding: 0.5rem 0;
 }
+.input {
+    padding-left: 5px !important;
+}
 .input-container input:focus {
-    background-color: var(--black-600);
+    background-color: transparent;
     color: var(--white-100);
-    border-color: var(--base);
+    border-color: var(--green-100);
     outline: none; 
-    box-shadow: 0 0 5px var(--base);
+    box-shadow: 0 0 5px var(--green-100);
 }
 
 .input-container label {
@@ -161,7 +184,7 @@ input[type="submit"], button {
     transition: all 0.15s ease-in-out;
     border-radius: 0.375rem;
     background-color: var(--black-500);
-    border: 2px var(--base) solid;
+    border: 2px var(--green-100) solid;
     width: 50%;
     cursor: pointer;
 }
@@ -169,11 +192,12 @@ input[type="submit"], button {
 input[type="submit"]:hover, button:hover {
     background-color: var(--base);
     color: var(--black-100);
+    border: 2px var(--base) solid;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
-    background-color: var(--base);
+    background-color: var(--third-base);
     color: var(--white-100);
 }
 
@@ -237,10 +261,10 @@ input[type="submit"]:hover, button:hover {
     margin-bottom: 10px;
 }
 
-#container {
+/* #container {
     background-color: var(--black-500);
     color: var(--white-100);
-}
+} */
 
 .theme-toggle-btn i {
     transition: transform 0.3s ease;
@@ -265,9 +289,9 @@ input[type="submit"]:hover, button:hover {
 
 .custom-file-label {
     background-color: transparent; 
-    color: #fff;
+    color: var(--green-100) !important;
     padding: 10px 20px;
-    border: solid 2px var(--base); 
+    border: solid 2px var(--green-100); 
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -275,27 +299,42 @@ input[type="submit"]:hover, button:hover {
 }
 
 .custom-file-label:hover {
-    color: #fff;
-    background-color: var(--violet-100);
+    color: #fff !important;
+    background-color: var(--second-base);
+    border: solid 2px var(--second-base); 
 }
 
 .input-file {
     display: none;
 }
 
-.input-container input[type="file"]:focus + .custom-file-label {
+/* .input-container input[type="file"]:focus + .custom-file-label {
     border-color: var(--base);
-}
+} */
 @media (max-width: 480px) {
     .input-container {
         width: 100%;
     }
     #container {
         width: 90%;
+        height: 90%;
         padding: 10px;
+        margin: 20px;
+        place-items: center;
+        justify-content: center;
+        justify-items: center;       
     }
-    h2 {
-        font-size: 1.3rem;
+    input[type="submit"], button {
+        width: 50%;
+        height: 40px;
+        font-size: 0.79rem;
+        text-align: center;
+    }
+    .content {
+        padding: 15px;
+    }
+    html {
+        font-size: 0.77rem;
     }
 }
 

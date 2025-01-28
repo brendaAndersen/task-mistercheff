@@ -35,3 +35,11 @@ document.getElementById('theme-toggle').addEventListener('click', function() {
         document.documentElement.setAttribute('data-theme', 'light');
     }
 });
+var options =  {
+    onKeyPress: function(cep, e, field, options) {
+      var masks = ['00000-000', '0-00-00-00'];
+      var mask = masks[0];
+      $('#cep').mask(mask, options);
+  }};
+ $('#cep').mask('12345-678', options)
+ $('.phone').mask('(00) 0000-0000');

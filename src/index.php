@@ -1,6 +1,6 @@
 <?php
 try {
-    $dbPath = ''; // adicionar caminho do arquivo.db 
+    $dbPath = 'C:\Users\Windows 10\AppData\Roaming\DBeaverData\workspace6\.metadata\sample-database-sqlite-1\Chinook.db'; // adicionar caminho do arquivo.db 
     $dsn = 'sqlite:' . $dbPath;
 
     $pdo = new PDO($dsn);
@@ -45,36 +45,41 @@ try {
             $toastClass = 'toast-info';
             $toastMessage = 'Empresa já está cadastrada.';
         } else {
-            $sql = "INSERT INTO companies (store_name, cnpj, email, contact, cep, street, number, complement, neighborhood, city, state, logo) 
+            if(is_numeric($number)){
+                $sql = "INSERT INTO companies (store_name, cnpj, email, contact, cep, street, number, complement, neighborhood, city, state, logo) 
                     VALUES (:store_name, :cnpj, :email, :contact, :cep, :street, :number, :complement, :neighborhood, :city, :state, :logo)";
             
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':store_name', $store_name);
-            $stmt->bindParam(':cnpj', $cnpj);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':contact', $contact);
-            $stmt->bindParam(':cep', $cep);
-            $stmt->bindParam(':street', $street);
-            $stmt->bindParam(':number', $number);
-            $stmt->bindParam(':complement', $complement);
-            $stmt->bindParam(':neighborhood', $neighborhood);
-            $stmt->bindParam(':city', $city);
-            $stmt->bindParam(':state', $state);
-            $stmt->bindParam(':logo', $logo, PDO::PARAM_LOB);
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':store_name', $store_name);
+                $stmt->bindParam(':cnpj', $cnpj);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':contact', $contact);
+                $stmt->bindParam(':cep', $cep);
+                $stmt->bindParam(':street', $street);
+                $stmt->bindParam(':number', $number);
+                $stmt->bindParam(':complement', $complement);
+                $stmt->bindParam(':neighborhood', $neighborhood);
+                $stmt->bindParam(':city', $city);
+                $stmt->bindParam(':state', $state);
+                $stmt->bindParam(':logo', $logo, PDO::PARAM_LOB);
 
-            if ($stmt->execute()) {
-                $toastClass = 'toast-success';
-                $toastMessage = 'Empresa cadastrada com sucesso!';
-                
-                $lastInsertId = $pdo->lastInsertId();
-                $sql_select = "SELECT * FROM companies WHERE id = :id";
-                $stmt_select = $pdo->prepare($sql_select);
-                $stmt_select->bindParam(':id', $lastInsertId, PDO::PARAM_INT);
-                $stmt_select->execute();
-                $company = $stmt_select->fetch(PDO::FETCH_ASSOC);
+                if ($stmt->execute()) {
+                    $toastClass = 'toast-success';
+                    $toastMessage = 'Empresa cadastrada com sucesso!';
+                    
+                    $lastInsertId = $pdo->lastInsertId();
+                    $sql_select = "SELECT * FROM companies WHERE id = :id";
+                    $stmt_select = $pdo->prepare($sql_select);
+                    $stmt_select->bindParam(':id', $lastInsertId, PDO::PARAM_INT);
+                    $stmt_select->execute();
+                    $company = $stmt_select->fetch(PDO::FETCH_ASSOC);
+                } else {
+                    $toastClass = 'toast-error';
+                    $toastMessage = 'Falha ao cadastrar a empresa. Tente novamente.';
+                }
             } else {
-                $toastClass = 'toast-error';
-                $toastMessage = 'Falha ao cadastrar a empresa. Tente novamente.';
+                $toastClass = 'toast-info';
+                $toastMessage = 'O número deve ser um valor consistente.';
             }
         }
     }
@@ -93,10 +98,11 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="src/styles/global.css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha512-0XDfGxFliYJPFrideYOoxdgNIvrwGTLnmK20xZbCAvPfLGQMzHUsaqZK8ZoH+luXGRxTrS46+Aq400nCnAT0/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div class="content">
+        <img src="./src/public/images/Mistercheff.png" alt="" class="logo">
         <h2>Cadastro de Empresa</h2>
         <div id="theme-toggle" class="theme-toggle-btn">
             <i id="theme-icon" class="fas fa-sun"></i>
@@ -160,6 +166,7 @@ try {
                     name="street"
                     class="input"
                     placeholder=" "
+                    data-mask="(00) 0000-0000"
                     required
                     
                 />
@@ -188,7 +195,7 @@ try {
                 required
                 pattern="^\d{5}-\d{3}$"
                 title="Formato do CEP inválido. O formato correto é 12345-678."
-            />
+                />
 
                 <label for="cep">CEP</label>
             </div>
@@ -248,13 +255,8 @@ try {
                 <label for="logo" class="custom-file-label">Escolher arquivo</label>
                 <input id="logo" type="file" name="logo" class="input-file" />
             </div>
-
-
-            
             <input id="show" type="submit" value="Cadastrar">
-            
         </div>
-
         </form>
 
     </div>
@@ -293,9 +295,7 @@ try {
     </script>
     <?php endif; ?>
 
-    <script src="src/js/script.js">
-       
-    </script>
+    <script src="src/js/script.js"></script>
 </body>
 </html>
  
